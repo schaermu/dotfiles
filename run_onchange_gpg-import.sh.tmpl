@@ -8,6 +8,6 @@ if ! bw status | grep -q "unlocked"; then
   exit 1
 fi
 
-gpg --import --passphrase {{ (bitwardenFields "item" (bitwarden "item" .bw_chezmoi_item_name).id).gpg_passphrase.value | quote }} --pinentry-mode=loopback ~/.keys/gpg/{{- .bw_gpg_private_key_filename }}
+gpg --import --pinentry-mode=loopback ~/.keys/gpg/{{- .bw_gpg_private_key_filename }}
 
 bw lock
