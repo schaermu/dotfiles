@@ -44,7 +44,7 @@ mkdir -p {{ .chezmoi.homeDir }}/.zfunc
 DNF_CMD=$(which dnf)
 APT_GET_CMD=$(which apt-get)
 
-if [[ ! -z $YUM_CMD ]]; then
+if [[ ! -z $DNF_CMD ]]; then
     sudo dnf install -y --skip-unavailable "${tools_apt[@]}"
     sudo dnf remove -y "${tools_non_apt[@]}"
 elif [[ ! -z $APT_GET_CMD ]]; then
