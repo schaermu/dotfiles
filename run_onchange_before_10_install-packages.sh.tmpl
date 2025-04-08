@@ -40,8 +40,18 @@ fi
 
 mkdir -p {{ .chezmoi.homeDir }}/.local/bin
 mkdir -p {{ .chezmoi.homeDir }}/.zfunc
-sudo apt-get update && sudo apt-get install -y "${tools_apt[@]}"
-sudo apt-get remove -y "${tools_non_apt[@]}"
+
+DNF_CMD=$(which dnf)
+APT_GET_CMD=$(which apt-get)
+
+if [[ ! -z $YUM_CMD ]]; then
+    sudo dnf install -y --skip-unavailable "${tools_apt[@]}"
+    sudo dnf remove -y "${tools_non_apt[@]}"
+elif [[ ! -z $APT_GET_CMD ]]; then
+    sudo apt-get update && sudo apt-get install -y "${tools_apt[@]}"
+    sudo apt-get remove -y "${tools_non_apt[@]}"
+fi
+
 if [[ $SHELL != *"zsh"* ]]; then
     sudo chsh -s $(which zsh) $(whoami)
 fi
