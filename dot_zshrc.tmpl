@@ -8,25 +8,23 @@ bindkey -e
 # enable passphrase prompt for gpg
 export GPG_TTY=$(tty)
 
-# pull in asdf
-. "$HOME/.asdf/asdf.sh"
-
-fpath=(${ASDF_DIR}/completions $fpath)
-fpath+=~/.zfunc
+ZSH_CACHE_DIR="${XDG_CACHE_HOME:-$HOME/.cache}/zsh"
+[[ -d $ZSH_CACHE_DIR/completions ]] || mkdir -p $ZSH_CACHE_DIR/completions  # For kubectl completions
+fpath=($ZSH_CACHE_DIR/completions $fpath)
+fpath=(~/.zfunc $fpath)
 zstyle :compinstall filename "$HOME/.zshrc"
 autoload -Uz compinit && compinit
-
 
 # Antigen
 source ~/antigen.zsh
 antigen use oh-my-zsh
 antigen bundle git
 antigen bundle pip
-antigen bundle asdf-direnv
+antigen bundle mise
 antigen bundle zsh-users/zsh-syntax-highlighting
 antigen apply
 
-# bring in auto completion for kubectl and helm
+# bring in auto completion for tools
 if [[ $commands[kubectl] ]]; then
   source <(kubectl completion zsh)
 fi
@@ -45,23 +43,6 @@ if [[ -f ~/.bwenv ]]; then
 fi
 source ~/.zshenv
 source ~/.shell_aliases
-
-# Bring in direnv and asdf hooks.
-eval "$(direnv hook zsh)"
-if test -f "$HOME/.config/asdf-direnv/zshrc"; then
-  source "$HOME/.config/asdf-direnv/zshrc"
-else
-  asdf direnv setup --no-touch-rc-file --shell zsh --version latest
-  source "$HOME/.config/asdf-direnv/zshrc"
-fi
-
-# setup omnisharp env vars
-if [[ ! -z "$(asdf plugin list | grep dotnet)" ]]; then
-  export DOTNET_ROOT="$(asdf where dotnet)"
-  export DOTNET_MSBUILD_SDK_RESOLVER_SDKS_VER="$(basename $DOTNET_ROOT)"
-  export DOTNET_MSBUILD_SDK_RESOLVER_SDKS_DIR="$DOTNET_ROOT/sdk/$DOTNET_MSBUILD_SDK_RESOLVER_SDKS_VER/Sdks"
-  export DOTNET_MSBUILD_SDK_RESOLVER_CLI_DIR="$DOTNET_ROOT"
-fi
 
 {{- if .wsl }}
 # fix for WSL/WT to keep the current path (https://docs.microsoft.com/en-us/windows/terminal/tutorials/new-tab-same-directory)

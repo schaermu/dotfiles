@@ -59,30 +59,25 @@ fi
 # install/update starship prompt
 curl -sS https://starship.rs/install.sh | sh -s -- --yes
 
-# install/update direnv
-export bin_path={{ .chezmoi.homeDir }}/.local/bin
-curl -sfL https://direnv.net/install.sh | bash
+# remove direnv
+if [[ -f "{{ .chezmoi.homeDir }}/bin/direnv" ]]; then
+    echo "Removing old direnv installation..."
+    rm -rf {{ .chezmoi.homeDir }}/bin/direnv
+fi
 
 # install/update antigen
 curl -L git.io/antigen > antigen.zsh
 
-# install or update asdf
+# remove asdf installation if present
 if [[ -d "{{ .chezmoi.homeDir }}/.asdf" ]]; then
-    echo "Updating asdf installation..."
-    git -C ~/.asdf pull origin HEAD
-else
-    git clone https://github.com/asdf-vm/asdf.git ~/.asdf
+    echo "Removing old asdf installation..."
+    rm -rf {{ .chezmoi.homeDir }}/.asdf
+    rm -rf {{ .chezmoi.homeDir }}/.local/bin/asdf
 fi
 
-# direnv plugin installation
-{{ .chezmoi.homeDir }}/.asdf/bin/asdf plugin add direnv
-{{ .chezmoi.homeDir }}/.asdf/bin/asdf direnv setup --no-touch-rc-file --shell zsh --version system
-
-# python, rust, golang and node plugins
-{{ .chezmoi.homeDir }}/.asdf/bin/asdf plugin add python
-{{ .chezmoi.homeDir }}/.asdf/bin/asdf plugin add rust
-{{ .chezmoi.homeDir }}/.asdf/bin/asdf plugin add golang
-{{ .chezmoi.homeDir }}/.asdf/bin/asdf plugin add nodejs
+# install mise (asdf replacement)
+curl https://mise.run | sh
+mise use -g usage
 
 # rust
 if [[ -d "{{ .chezmoi.homeDir }}/.cargo" ]]; then
