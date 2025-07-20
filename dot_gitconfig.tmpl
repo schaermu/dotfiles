@@ -1,7 +1,7 @@
 [user]
     name = Stefan Schärmeli
     email = 519494+schaermu@users.noreply.github.com
-    signingKey = {{ .git_signing_key }}
+    signingKey = {{ (bitwardenFields "item" (bitwarden "item" "chezmoi").id).git_signing_key_id.value | quote }}
 
 [commit]
     gpgsign = true

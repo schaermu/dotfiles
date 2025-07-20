@@ -9,7 +9,6 @@
 
     bw_gpg_public_key_filename = "git-public-key.asc"
     bw_gpg_private_key_filename = "git-private-key.asc"
-    git_signing_key = {{ (bitwardenFields "item" (bitwarden "item" "chezmoi").id).git_signing_key_id.value | quote }}
 
 [edit]
     command = "code"

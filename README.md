@@ -2,11 +2,15 @@
 
 ## Prerequisites
 
-1. Run bitwarden installation script:
+1. Download & check bitwarden installation script:
    ```
-   curl -L https://raw.githubusercontent.com/schaermu/dotfiles/refs/heads/main/_install_bitwarden.sh | bash
+   wget https://raw.githubusercontent.com/schaermu/dotfiles/refs/heads/main/_install_bitwarden.sh
    ```
-2. Unlock vault within current terminal session:
+2. Run script:
+   ```
+   chmod +x _install_bitwarden.sh && ./_install_bitwarden.sh
+   ```
+3. Unlock vault within current terminal session:
    ```
    export BW_SESSION=$(bw unlock --raw)
    ```
