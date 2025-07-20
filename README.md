@@ -4,7 +4,7 @@
 
 1. Run bitwarden installation script:
    ```
-   curl -L https://raw.githubusercontent.com/schaermu/dotfiles/refs/heads/master/_install_bitwarden.sh | bash
+   curl -L https://raw.githubusercontent.com/schaermu/dotfiles/refs/heads/main/_install_bitwarden.sh | bash
    ```
 2. Unlock vault within current terminal session:
    ```
