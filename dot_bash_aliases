@@ -1,0 +1,50 @@
+# Enable dircolors.
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    alias ls='ls --color=auto'
+    alias dir='dir --color=auto'
+    alias vdir='vdir --color=auto'
+
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
+fi
+
+# Create list aliases.
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+
+# Add an "alert" alias for long running commands.  Use like so: sleep 10; alert.
+alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
+
+# Create SSH host aliases.
+alias fatboy='ssh -p 22222 192.168.1.11'
+alias batocera='ssh root@192.168.1.236'
+
+# Create docker compose alias.
+alias dc='docker compose'
+
+# Make file commands verbose.
+alias cp='cp -v';
+alias mv='mv -v';
+
+# Create parent directories on demand.
+alias mkdir='mkdir -pv'
+
+# Display drives and space in human readable format.
+alias df='df -h'
+
+# Print disk usage per directory non-recursively, in human readable format.
+alias du='du -h -d1'
+
+# Improve top with modern alternatives.
+if type 'atop' &> /dev/null; then
+  alias top='atop'
+elif type 'htop' &> /dev/null; then
+  alias top='htop'
+elif type 'ntop' &> /dev/null; then
+  if [[ "$OSTYPE" =~ ^(cygwin|mingw|msys) ]]; then
+    alias top='ntop'
+  fi
+fi

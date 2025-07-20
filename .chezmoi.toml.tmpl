@@ -1,0 +1,16 @@
+[data]
+    # bitwarden config
+    bw_chezmoi_item_name = "chezmoi"
+    {{ if eq .chezmoi.hostname "DONNERCHUEBU" }}
+    bw_ssh_key_id = "90f9103d-2a2c-41ce-9d4b-19df35e53d26"
+    {{ else }}
+    bw_ssh_key_id = "70b1be44-4383-492b-9535-c98f81b864d4"
+    {{ end }}
+
+    bw_gpg_public_key_filename = "git-public-key.asc"
+    bw_gpg_private_key_filename = "git-private-key.asc"
+    git_signing_key = {{ (bitwardenFields "item" (bitwarden "item" "chezmoi").id).git_signing_key_id.value | quote }}
+
+[edit]
+    command = "code"
+    args = ["--wait"]

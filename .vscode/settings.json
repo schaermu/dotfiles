@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "*.tmpl": "shellscript",
+        "dot_*": "shellscript",
+        "*.toml.tmpl": "toml",
+    }
+}
